@@ -1,0 +1,199 @@
+﻿<Page x:Class="WpfApp1.Pages.MainMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1.Pages"
+      xmlns:local1="clr-namespace:WpfApp1.Models"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Page_Loaded"
+      Title="MainMenu"
+      WindowTitle="CarGallery - main menu">
+
+    <Page.Resources>
+        <ObjectDataProvider MethodName="GetEngineTypes" ObjectType="{x:Type local1:CarData}" x:Key="EngineTypesProvider"/>
+        <ObjectDataProvider MethodName="GetCarBodies" ObjectType="{x:Type local1:CarData}" x:Key="CarBodiesProvider"/>
+    </Page.Resources>
+
+    <Grid>
+
+        <!--Main Grid Definitions-->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <!--Header Grid-->
+
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="0,10,0,0">
+
+                <!--Header Grid Defenitions-->
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Header Grid Elements-->
+            <Grid>
+                <Border Height="auto" CornerRadius="4,0,0,4" BorderThickness="1,1,1,1" Background="#FF535151" >
+                    <TextBox PreviewKeyDown="SearchBox_KeyDown" TextChanged="SearchBox_TextChanged" x:Name="SearchBox" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" VerticalContentAlignment="Center" Height="30" Text="Search..." Foreground="GhostWhite" VerticalAlignment="Center" BorderThickness="0" Padding="5,0" BorderBrush="Transparent" OverridesDefaultStyle="True"/>
+                </Border>
+                <Button IsDefault="True" x:Name="SearchBtn" Click="SearchBtn_Click" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Padding="5">
+                    <Image Width="20" Height="20" Source="../img/search.png"/>
+                </Button>
+            </Grid>
+            <ListBox Visibility="Collapsed" Grid.Row="1" x:Name="keywordHelper">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Helper}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+
+
+
+        <Border Grid.Row="1" Grid.Column="1" Margin="0,10,0,0" CornerRadius="4,4,4,4" BorderThickness="1,1,1,1" Background="#FF535151" >
+        <ListBox x:Name="ListView" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Uid="DataTemplate">
+                    <Grid Margin="0,10">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Name="id" Text="{Binding Id}" Visibility="Hidden"/>
+
+                            <TextBlock Grid.Column="0" Text="{Binding BrandName}" Margin="5,0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                            <TextBlock Grid.Column="2" Text=" - "></TextBlock>
+                            <TextBlock Grid.Column="3" Text="{Binding Seats}"></TextBlock>
+                            <TextBlock Grid.Column="4" Text="seats"  Margin="5,0"></TextBlock>
+                            <TextBlock Grid.Column="5" Text="{Binding CarBody}"/>
+                            
+                        </Grid>
+
+                        <Grid  Grid.Row="1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock  Grid.Column="0" Text="{Binding EngineType}" Margin="5,0"></TextBlock>
+                            <TextBlock  Grid.Column="1" Text="engine - "></TextBlock>
+                            <TextBlock  Grid.Column="2" Text="{Binding Year}"></TextBlock>
+                            
+                        </Grid>
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                        <EventSetter Event="PreviewMouseLeftButtonDown"  Handler=" ListViewItem_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        </Border>
+
+        <Border Padding="5" Grid.Column="2"  Grid.Row="1" Margin="0, 5">
+            <StackPanel >
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="Filters" HorizontalAlignment="Center" Foreground="GhostWhite"/>
+                        <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody2TextBlock}" Foreground="GhostWhite" Text="Car body"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource CarBodiesProvider}}" SelectedValuePath="Key" DisplayMemberPath="Value" Margin="0,10" x:Name="BodyFilter" HorizontalAlignment="Center" Foreground="GhostWhite" MinWidth="100"/>
+                        <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody2TextBlock}" Foreground="GhostWhite" Text="Engine type"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource EngineTypesProvider}}" SelectedValuePath="Key" DisplayMemberPath="Value" Margin="0,10" x:Name="EngineFilter" HorizontalAlignment="Center" Foreground="GhostWhite" MinWidth="100"/>
+
+                        <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody2TextBlock}" Foreground="GhostWhite" Text="Min year of production"/>
+                        <Grid  MinWidth="100" Margin="15,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="13" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="13" />
+                                <RowDefinition Height="13" />
+                            </Grid.RowDefinitions>
+                            <TextBox Foreground="GhostWhite" HorizontalContentAlignment="Center" Name="NUDTextBox"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged"/>
+                            <RepeatButton Name="NUDButtonUP"  Grid.Column="1" Grid.Row="0" Margin="0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">
+                                <Image Width="10" Height="10" Source="../img/Arrow.png"/>
+                            </RepeatButton>
+                            <RepeatButton Name="NUDButtonDown"  Grid.Column="1" Grid.Row="1" Margin="0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="13" VerticalAlignment="Bottom" Click="NUDButtonDown_Click">
+                                <Image Width="10" Height="10" Source="../img/Arrow.png">
+                                    <Image.RenderTransform>
+                                        <RotateTransform Angle="180"/>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </RepeatButton>
+                            <CheckBox x:Name="minYearSwitch" Margin="5,0,0,0" Grid.Column="2" VerticalAlignment="Center" Grid.RowSpan="2"/>
+                        </Grid>
+                        
+                        <TextBlock HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody2TextBlock}" Foreground="GhostWhite" Text="Max year of production"/>
+                        <Grid  MinWidth="100" Margin="15,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="13" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="13" />
+                                <RowDefinition Height="13" />
+                            </Grid.RowDefinitions>
+                            <TextBox Foreground="GhostWhite" HorizontalContentAlignment="Center" Name="NUDTextBox1"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox1_PreviewKeyDown" PreviewKeyUp="NUDTextBox1_PreviewKeyUp" TextChanged="NUDTextBox1_TextChanged"/>
+                            <RepeatButton Name="NUDButtonUP1"  Grid.Column="1" Grid.Row="0" Margin="0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP1_Click">
+                                <Image Width="10" Height="10" Source="../img/Arrow.png"/>
+                            </RepeatButton>
+                            <RepeatButton Name="NUDButtonDown1"  Grid.Column="1" Grid.Row="1" Margin="0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="13" VerticalAlignment="Bottom" Click="NUDButtonDown1_Click">
+                                <Image Width="10" Height="10" Source="../img/Arrow.png">
+                                    <Image.RenderTransform>
+                                        <RotateTransform Angle="180"/>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </RepeatButton>
+                            <CheckBox x:Name="maxYearSwitch" Margin="5,0,0,0" Grid.Column="2" VerticalAlignment="Center" Grid.RowSpan="2"/>
+                        </Grid>
+                        <Button Content="Reset" Name="resetBtn" Click="resetBtn_Click" Margin="0,10"/>
+                    </StackPanel>
+                </Grid>
+                <Button x:Name="SelectMenuBtn" Click="SelectMenuBtn_Click" Content="Search by select" Margin="0,0,0,10"/>
+                <Button Visibility="Hidden" x:Name="AdminMenuBtn" Click="AdminMenuBtn_Click" Content="Admin menu"/>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Page>

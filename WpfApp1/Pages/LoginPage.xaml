@@ -1,0 +1,22 @@
+﻿<Page x:Class="WpfApp1.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="485" d:DesignWidth="715"
+      Title="Login"
+      WindowTitle="CarGallery - sign in">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="300">
+            <TextBlock Foreground="GhostWhite" Text="Sign In" HorizontalAlignment="Center" FontSize="36" />
+            <TextBlock Foreground="GhostWhite" Text="Username:" Margin="0,10,0,0" />
+            <TextBox Foreground="GhostWhite" x:Name="tbxUsername" Padding="5" />
+            <TextBlock Foreground="GhostWhite" Text="Password:" Margin="0,10,0,0" />
+            <PasswordBox Foreground="GhostWhite" x:Name="pbxPassword" Padding="5" />
+            <Button IsDefault="True" x:Name="btnLogin" Content="LOGIN" Padding="5" Margin="0,10,0,0" Click="btnLogin_Click"/>
+            <Button x:Name="btnRegister" Content="REGISTER" Padding="5" Margin="0,10,0,0"  Click="btnRegister_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

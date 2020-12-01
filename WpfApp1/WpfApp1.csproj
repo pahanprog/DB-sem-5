@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>WpfApp1</AssemblyName>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <RootNamespace>WpfApp1</RootNamespace>
+    <UserSecretsId>4cf927fc-505f-4c09-b9d8-b12e18215406</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="img\.ico" />
+    <None Remove="img\Arrow.png" />
+    <None Remove="img\logo.ico" />
+    <None Remove="img\logo.png" />
+    <None Remove="img\minus.png" />
+    <None Remove="img\noImage.png" />
+    <None Remove="img\plus.png" />
+    <None Remove="img\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\Arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\minus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\noImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\plus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\search.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
